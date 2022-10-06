@@ -1,6 +1,6 @@
 import linecache as lc
 
-EMPTYDATA = """
+EMPTY_DATA = """
 False
  - - - - - - - - Stats - - - - - - - - 
 // Health
@@ -35,38 +35,53 @@ False
 
 
 class saves():
-    def __init__(self, savefileName):
-        self.savefileName = savefileName
-        self.isUsed = checkIsUsed(self)
+    def __init__(self, save_filename):
+        self.save_filename = save_filename
+        self.is_used = check_is_used(self)
 
     
-    def checkIsUsed(self):
-        lineData = lc.getline(self.savefileName, 1).rstrip()
-        isUsed = True if lineData == "True" else False
-        return isUsed
+    def check_is_used(self):
+        line_data = lc.getline(self.savefileName, 1).rstrip()
+        is_used = True if line_data == "True" else False
+        return is_used
 
 
-    def deleteSave(self):
-        with open(self.savefileName, 'r') as savefile:
-            savefile.write(EMPTYDATA)
+    def delete_save(self):
+        with open(self.save_filename, 'w') as savefile:
+            savefile.write(EMPTY_DATA)
 
 
-    def createSave(self)
-        with open(self.savefileName, 'r') as savefileIN and open(self.savefileName, 'w') as savefileOUT:
-            lines = savefileIN.readlines()
-            lines[0] = "True\n"
-            savefileOUT.write(lines)
+    def create_save(self)
+        with open(self.savefileName, 'w') as savefile:
+            savefile.write(f"""
+True
+ - - - - - - - - Stats - - - - - - - - 
+// Health
+{health}
+// Endurance
+{endurance}
+// Strength
+{strength}
+// Agility
+{agility}
+// Intelligence
+{intelligence}
+// Luck
+{luck}
+// Confidence
+{confidence}
+// Charisma
+{charisma}
+// Carry Weight
+{carry_weight}
 
+ - - - - - - - - Extra - - - - - - - - 
+// Past Info
+{has_past_info}
 
+ - - - - - - Location - - - - - - 
+// Location
+{location}
 
-def displaySaves():
-    pass
-
-def selectSave():
-    pass
-
-def save():
-    pass
-    
-
-
+"""
+)
